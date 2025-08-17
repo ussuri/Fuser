@@ -264,9 +264,9 @@ inline const char* nvfCheckMsgImpl(const char* /*msg*/, const char* args) {
         "https://github.com/NVIDIA/Fuser/issues. ",         \
         nvfuser::to_str(__VA_ARGS__));
 
-#define NVF_ERROR(cond, ...) \
-  if ((!(cond))) {           \
-    NVF_THROW(__VA_ARGS__)   \
+#define NVF_ERROR(cond, ...)    \
+  if ((!(cond))) [[unlikely]] { \
+    NVF_THROW(__VA_ARGS__)      \
   }
 
 #define NVF_CHECK_MSG(cond, ...) \
@@ -274,7 +274,7 @@ inline const char* nvfCheckMsgImpl(const char* /*msg*/, const char* args) {
       "Expected " #cond " to be true, but got false.  ", ##__VA_ARGS__))
 
 #define NVF_CHECK(cond, ...)                 \
-  if ((!(cond))) {                           \
+  if ((!(cond))) [[unlikely]] {              \
     nvfuser::nvfCheckFail(                   \
         __func__,                            \
         __FILE__,                            \

@@ -26,6 +26,8 @@
 namespace nvfuser {
 namespace codegen {
 
+using namespace ir_utils;
+
 namespace {
 
 std::string ptrType(DataType dt) {
